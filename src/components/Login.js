@@ -1,44 +1,44 @@
-import { useState } from "react";
-import { login } from "../utils/firebase-auth";
+// import { useState } from "react";
+import { firebaseLogin } from "../utils/firebase-auth";
+import { Formik, Form, ErrorMessage, Field } from 'formik'
 
 function Login() {
-    const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
-
-    function handleEmailChange(e) {
-        setEmail(e.target.value);
-    }
-
-    function handlePassChange(e) {
-        setPass(e.target.value);
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        login(email, pass)
-            .then(console.log)
-            .catch(console.error)
-    }
-
 
     return <div>
         <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-            <div className="form-field">
-                <label>
-                    Email:
-                </label>
-                <input type="email" value={email} onChange={handleEmailChange} />
-            </div>
-            <div className="form-field">
-                <label>
-                    Pass:
-                </label>
-                <input type="password" value={pass} onChange={handlePassChange} />
-            </div>
-            <input type="submit" value="Login" />
-        </form>
+        <Formik
+            initialValues={{ email: '', password: '' }}
+            validate={values => {
+                const errors = {};
+                if (!values.email) {
+                    errors.email = 'Required';
+                } else if (
+                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                ) {
+                    errors.email = 'Invalid email address';
+                }
+                return errors;
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+                setTimeout(() => {
+                    alert(JSON.stringify(values, null, 2));
+                    setSubmitting(false);
+
+                }, 400);
+            }}
+        >
+            {({ isSubmitting }) => (
+                <Form>
+                    <Field type="email" name="email" />
+                    <ErrorMessage name="email" component="div" />
+                    <Field type="password" name="password" />
+                    <ErrorMessage name="password" component="div" />
+                    <button type="submit" disabled={isSubmitting}>
+                        Submit
+                    </button>
+                </Form>
+            )}
+        </Formik>
     </div>
 }
 
