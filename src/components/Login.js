@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import { firebaseLogin } from "../utils/firebase-auth";
-import { Formik, Form, ErrorMessage, Field } from 'formik'
+import { Formik, Form, Field } from 'formik'
+import { userSchema } from "../utils/yup-schemas";
 
 function Login() {
 
@@ -8,17 +9,7 @@ function Login() {
         <h2>Login</h2>
         <Formik
             initialValues={{ email: '', password: '' }}
-            validate={values => {
-                const errors = {};
-                if (!values.email) {
-                    errors.email = 'Required';
-                } else if (
-                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                ) {
-                    errors.email = 'Invalid email address';
-                }
-                return errors;
-            }}
+            validationSchema={userSchema}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     alert(JSON.stringify(values, null, 2));
@@ -27,12 +18,16 @@ function Login() {
                 }, 400);
             }}
         >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, errors, touched }) => (
                 <Form>
-                    <Field type="email" name="email" />
-                    <ErrorMessage name="email" component="div" />
-                    <Field type="password" name="password" />
-                    <ErrorMessage name="password" component="div" />
+                    <div><Field type="email" name="email" /></div>
+                    {errors.email && touched.email ? (
+                        <div>{errors.email}</div>
+                    ) : null}
+                    <div><Field type="password" name="password" /></div>
+                    {errors.password && touched.password ? (
+                        <div>{errors.password}</div>
+                    ) : null}
                     <button type="submit" disabled={isSubmitting}>
                         Submit
                     </button>
