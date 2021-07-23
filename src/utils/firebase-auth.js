@@ -4,8 +4,8 @@ function firebaseLogin(email, pass) {
     return auth.signInWithEmailAndPassword(email, pass)
 }
 
-function logout() {
+function firebaseLogout() {
     return auth.signOut();
 }
 
-export { firebaseLogin, logout };
+export { firebaseLogin, firebaseLogout };

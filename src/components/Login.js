@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import { firebaseLogin } from "../utils/firebase-auth";
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import { Button, TextField } from '@material-ui/core'
 import { userSchema } from "../utils/yup-schemas";
 
@@ -9,7 +9,6 @@ function Login({history}) {
     function handleSubmit({ email, password }, { setSubmitting, resetForm }) {
         firebaseLogin(email, password)
             .then(u => {
-                console.log(u);
                 resetForm();
                 setSubmitting(false);
                 history.push('/portal');
