@@ -1,5 +1,7 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { AppBar, Button, Typography } from '@material-ui/core'
 import { useContext } from "react";
+import { NavLink } from 'react-router-dom';
 import NotificationContext from '../context/notificationContext';
 import UserContext from "../context/userContext";
 import { firebaseLogout } from '../utils/firebase-auth';
@@ -11,18 +13,16 @@ function Header() {
     const handleLogout = (e) => {
         firebaseLogout()
             .then(() => {
-                setNotification({ open: true, message: 'logged out' })
+                setNotification({ open: true, message: 'logged out' });
             })
             .catch(e => {
-                setNotification({ open: true, message: e.message })
+                setNotification({ open: true, message: e.message });
             });
     }
 
     return (
         <AppBar position="static">
-            <Typography variant="h6">
-                {user ? `Logged in as ${user.email}` : 'Please log in'}
-            </Typography>
+            <Button color="inherit"><NavLink to="/">Home</NavLink></Button>
             {user && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
         </AppBar>
     )

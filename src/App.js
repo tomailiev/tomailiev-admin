@@ -10,6 +10,7 @@ import LoadingContext from './context/loadingContext';
 import UserContext from './context/userContext';
 import { auth } from './utils/firebase-config';
 import NotificationContext from './context/notificationContext';
+import Videos from './components/Videos';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,16 +41,17 @@ function App() {
       <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
         <UserContext.Provider value={{ user, setUser }}>
           <NotificationContext.Provider value={{ notification, setNotification }}>
-            <Backdrop open={isLoading}>
-              <CircularProgress color="primary" />
-            </Backdrop>
-
-            <Header />
             <Router>
+              <Backdrop open={isLoading}>
+                <CircularProgress color="primary" />
+              </Backdrop>
+
+              <Header />
               <Switch>
                 <Route exact path="/" component={Switcher} />
                 <Route path="/login" component={Login} />
                 <Route path="/portal" component={Portal} />
+                <Route path="/view/videos" component={Videos} />
               </Switch>
             </Router>
             <Snackbar

@@ -1,3 +1,5 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/prop-types */
 import { useContext, useEffect } from "react"
 import LoadingContext from "../context/loadingContext";
 import UserContext from "../context/userContext"
@@ -14,7 +16,7 @@ const Switcher = ({ history }) => {
         }
     }, [history, isLoading, user]);
 
-    return <div>Loading...</div>
+    return <div>Redirecting...</div>
 }
 
 export default Switcher;
