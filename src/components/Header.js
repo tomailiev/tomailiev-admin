@@ -1,17 +1,21 @@
 import { AppBar, Button, Typography } from '@material-ui/core'
 import { useContext } from "react";
+import NotificationContext from '../context/notificationContext';
 import UserContext from "../context/userContext";
 import { firebaseLogout } from '../utils/firebase-auth';
 
 function Header() {
     const { user } = useContext(UserContext);
+    const { setNotification } = useContext(NotificationContext);
 
     const handleLogout = (e) => {
         firebaseLogout()
             .then(() => {
-                console.log('logged out');
+                setNotification({ open: true, message: 'logged out' })
             })
-            .catch(console.error);
+            .catch(e => {
+                setNotification({ open: true, message: e.message })
+            });
     }
 
     return (

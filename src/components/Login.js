@@ -1,20 +1,25 @@
 // import { useState } from "react";
 import { firebaseLogin } from "../utils/firebase-auth";
 import { Formik, Form } from 'formik';
-import { Button, TextField } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core';
 import { userSchema } from "../utils/yup-schemas";
+import { useContext } from "react";
+import NotificationContext from "../context/notificationContext";
 
-function Login({history}) {
+function Login({ history }) {
+
+    const { setNotification } = useContext(NotificationContext);
 
     function handleSubmit({ email, password }, { setSubmitting, resetForm }) {
         firebaseLogin(email, password)
             .then(u => {
+                setNotification({ open: true, message: 'Login Success' });
                 resetForm();
-                setSubmitting(false);
                 history.push('/portal');
+                setSubmitting(false);
             })
             .catch(e => {
-                console.error(e);
+                setNotification({ open: true, message: e.message });
                 setSubmitting(false);
             })
     }
