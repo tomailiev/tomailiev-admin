@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Snackbar } from '@material-ui/core';
+import { Backdrop, CircularProgress, Snackbar } from '@material-ui/core';
 import './App.css';
 import Header from './components/Header';
 import Login from './components/Login';
@@ -37,9 +37,13 @@ function App() {
 
   return (
     <div className="App">
-      <LoadingContext.Provider value={{ isLoading }}>
-        <UserContext.Provider value={{ user }}>
+      <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
+        <UserContext.Provider value={{ user, setUser }}>
           <NotificationContext.Provider value={{ notification, setNotification }}>
+            <Backdrop open={isLoading}>
+              <CircularProgress color="primary" />
+            </Backdrop>
+
             <Header />
             <Router>
               <Switch>
@@ -49,6 +53,7 @@ function App() {
               </Switch>
             </Router>
             <Snackbar
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
               open={notification.open}
               autoHideDuration={2000}
               message={notification.message}
