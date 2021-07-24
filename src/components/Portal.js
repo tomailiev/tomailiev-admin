@@ -52,9 +52,9 @@ function Portal({ history }) {
             <Menu anchorEl={anchors.items} open={!!anchors.items} keepMounted onClick={handleItemChoice}>
                 <MenuItem>events</MenuItem>
                 <MenuItem>audios</MenuItem>
-                <MenuItem>photos</MenuItem>
+                <MenuItem>images</MenuItem>
                 <MenuItem>videos</MenuItem>
-                <MenuItem>recordings</MenuItem>
+                <MenuItem>recs</MenuItem>
             </Menu>
             <Button disabled={item === 'items...' || action === 'actions...'}>
                 <Link to={`${action}/${item}`}>GO!</Link>

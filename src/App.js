@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Backdrop, CircularProgress, Snackbar } from '@material-ui/core';
+import { Backdrop, CircularProgress, Snackbar, CssBaseline } from '@material-ui/core';
 import './App.css';
 import Header from './components/Header';
 import Login from './components/Login';
@@ -10,7 +10,8 @@ import LoadingContext from './context/loadingContext';
 import UserContext from './context/userContext';
 import { auth } from './utils/firebase-config';
 import NotificationContext from './context/notificationContext';
-import Videos from './components/Videos';
+import Items from './components/Items';
+import WithAuthGuard from './components/WithAuthGuard';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -37,34 +38,36 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
-        <UserContext.Provider value={{ user, setUser }}>
-          <NotificationContext.Provider value={{ notification, setNotification }}>
-            <Router>
-              <Backdrop open={isLoading}>
-                <CircularProgress color="primary" />
-              </Backdrop>
+    <CssBaseline>
 
-              <Header />
-              <Switch>
-                <Route exact path="/" component={Switcher} />
-                <Route path="/login" component={Login} />
-                <Route path="/portal" component={Portal} />
-                <Route path="/view/videos" component={Videos} />
-              </Switch>
-            </Router>
-            <Snackbar
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              open={notification.open}
-              autoHideDuration={2000}
-              message={notification.message}
-              onClose={handleSnackbarClose}
-            />
-          </NotificationContext.Provider>
-        </UserContext.Provider>
-      </LoadingContext.Provider>
-    </div>
+      <div className="App">
+        <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
+          <UserContext.Provider value={{ user, setUser }}>
+            <NotificationContext.Provider value={{ notification, setNotification }}>
+              <Router>
+                <Backdrop open={isLoading}>
+                  <CircularProgress color="primary" />
+                </Backdrop>
+                <Header />
+                <Switch>
+                  <Route exact path="/" component={Switcher} />
+                  <WithAuthGuard path="/login" component={Login} shouldAuth={false} />
+                  <WithAuthGuard path="/portal" component={Portal} shouldAuth={true} />
+                  <WithAuthGuard path="/view/" component={Items} shouldAuth={true} />
+                </Switch>
+              </Router>
+              <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={notification.open}
+                autoHideDuration={2000}
+                message={notification.message}
+                onClose={handleSnackbarClose}
+              />
+            </NotificationContext.Provider>
+          </UserContext.Provider>
+        </LoadingContext.Provider>
+      </div>
+    </CssBaseline>
   );
 }
 

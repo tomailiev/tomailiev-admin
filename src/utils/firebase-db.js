@@ -6,7 +6,7 @@ function getContent(type) {
         .then(querySnapshot => {
             const docs = [];
             querySnapshot.forEach(x => {
-                docs.push(x.data());
+                docs.push(Object.assign({ id: x.id }, x.data()));
             });
             return docs;
         })
