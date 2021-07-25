@@ -43,12 +43,12 @@ function Portal({ history }) {
         </h2>
         <h6>What would you like to do?</h6>
         <section>
-            <Button onClick={handleActionMenuOpen} color="primary">{action}</Button>
+            <Button variant="contained" onClick={handleActionMenuOpen}>{action}</Button>
             <Menu anchorEl={anchors.actions} open={!!anchors.actions} keepMounted onClick={handleActionChoice}>
                 <MenuItem>view</MenuItem>
                 <MenuItem>add</MenuItem>
             </Menu>
-            <Button onClick={handleItemMenuOpen}>{item}</Button>
+            <Button variant="contained" onClick={handleItemMenuOpen}>{item}</Button>
             <Menu anchorEl={anchors.items} open={!!anchors.items} keepMounted onClick={handleItemChoice}>
                 <MenuItem>events</MenuItem>
                 <MenuItem>audios</MenuItem>
@@ -56,7 +56,7 @@ function Portal({ history }) {
                 <MenuItem>videos</MenuItem>
                 <MenuItem>recs</MenuItem>
             </Menu>
-            <Button disabled={item === 'items...' || action === 'actions...'}>
+            <Button  variant="contained" color="secondary" disabled={item === 'items...' || action === 'actions...'}>
                 <Link to={`${action}/${item}`}>GO!</Link>
             </Button>
         </section>

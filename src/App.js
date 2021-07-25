@@ -12,6 +12,7 @@ import { auth } from './utils/firebase-config';
 import NotificationContext from './context/notificationContext';
 import Items from './components/Items';
 import WithAuthGuard from './components/WithAuthGuard';
+import AddItem from './components/AddItem';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -54,6 +55,7 @@ function App() {
                   <WithAuthGuard path="/login" component={Login} shouldAuth={false} />
                   <WithAuthGuard path="/portal" component={Portal} shouldAuth={true} />
                   <WithAuthGuard path="/view/" component={Items} shouldAuth={true} />
+                  <WithAuthGuard path="/add/" component={AddItem} shouldAuth={true} />
                 </Switch>
               </Router>
               <Snackbar
