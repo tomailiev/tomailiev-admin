@@ -1,13 +1,34 @@
 import { Button, FormControlLabel, Switch, TextField } from "@material-ui/core";
 import { Form, Formik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import NotificationContext from "../context/notificationContext";
+import * as handleSubmission from '../utils/handleSubmission';
+import ItemCard from "./ItemCard";
 
 function AddEditForm(props) {
 
+    const { setNotification } = useContext(NotificationContext);
     const [featured, setFeatured] = useState(props.initialValues.featured);
+    const [item, setItem] = useState(null);
 
-    const handleSubmit = (e, { setSubmitting, resetForm }) => {
-        console.log(e);
+
+    const handleSubmit = (e, { setSubmitting }) => {
+        if (handleSubmission[props.type]) {
+            handleSubmission[props.type](e)
+                .then(i => {
+                    console.log(i);
+                    setItem(Object.assign(i, featured));
+                    setSubmitting(false);
+                })
+                .catch(err => {
+                    setNotification(err);
+                    setSubmitting(false);
+                });
+        } else {
+            console.log(e)
+            setItem(e);
+            setSubmitting(false);
+        }
     }
 
     const handleSwitchChange = (e) => {
@@ -21,7 +42,7 @@ function AddEditForm(props) {
                 onSubmit={handleSubmit}
                 validationSchema={props.validationSchema}
             >
-                {({ isSubmitting, errors, touched, values, handleChange }) => (
+                {({ isSubmitting, errors, touched, values, handleChange, resetForm }) => (
                     <Form>
                         {Object.keys(props.initialValues).map(x => {
                             return x !== 'featured'
@@ -48,10 +69,13 @@ function AddEditForm(props) {
                                 )
                         })}
 
-                        <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>Save</Button>
+                        <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>Preview</Button>
+                        <Button variant="contained" color="primary" type="button" onClick={() => resetForm()} >Cancel</Button>
+
                     </Form>
                 )}
             </Formik>
+            {item && <ItemCard item={item} />}
         </div>
     )
 }

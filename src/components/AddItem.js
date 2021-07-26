@@ -12,7 +12,7 @@ function AddItem({ location }) {
     }, [location.pathname]);
 
     function handleAddItem(e) {
-        setFormObjects(prev => prev.concat(<AddEditForm initialValues={initialValues[formType]} validationSchema={validationSchemas[formType]} />));
+        setFormObjects(prev => prev.concat(<AddEditForm initialValues={initialValues[formType]} validationSchema={validationSchemas[formType]} type={formType} />));
     }
 
     return (

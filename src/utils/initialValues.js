@@ -1,7 +1,7 @@
 const audio = {
     audioUrl: '',
-    description: '',
-    title: '',
+    // description: '',
+    // title: '',
     featured: false,
 };
 
@@ -22,6 +22,7 @@ const image = {
 
 const rec = {
     spotifyUrl: '',
+    infoUrl: '',
     featured: false
 };
 

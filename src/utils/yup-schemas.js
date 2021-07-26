@@ -7,9 +7,9 @@ const userSchema = yup.object().shape({
 
 const audio = yup.object().shape({
     audioUrl: yup.string().url().required(),
-    description: yup.string().min(3),
+    // description: yup.string().min(3),
     featured: yup.boolean().default(false),
-    title: yup.string().required().min(6)
+    // title: yup.string().required().min(6)
 });
 
 const event = yup.object().shape({
@@ -29,6 +29,7 @@ const image = yup.object().shape({
 
 const rec = yup.object().shape({
     spotifyUrl: yup.string().required().url(),
+    infoUrl: yup.string().url(),
     featured: yup.boolean().default(false)
 });
 
