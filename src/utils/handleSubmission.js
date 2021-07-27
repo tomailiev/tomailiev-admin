@@ -30,7 +30,7 @@ function rec({ spotifyUrl, infoUrl }) {
             const { title, artistName, thumbnailUrl } = entitiesByUniqueId[entityUniqueId];
             const { amazonStore, itunes } = linksByPlatform;
             return {
-                cdUrl: amazonStore.url,
+                cdUrl: amazonStore?.url,
                 groupName: artistName,
                 imageUrl: thumbnailUrl,
                 itunesUrl: itunes.url,
