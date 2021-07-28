@@ -1,11 +1,13 @@
 import { Button, Dialog, FormControlLabel, Switch, TextField } from "@material-ui/core";
-import { KeyboardDateTimePicker } from '@material-ui/pickers'
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { Form, Formik } from "formik";
+import DateFnsUtils from "@date-io/date-fns";
 import { useContext, useState } from "react";
 import LoadingContext from "../context/loadingContext";
 import NotificationContext from "../context/notificationContext";
 import * as handleSubmission from '../utils/handleSubmission';
 import ItemCard from "./ItemCard";
+import { Timestamp } from "../utils/firebase-config";
 
 function AddEditForm(props) {
 
@@ -14,7 +16,6 @@ function AddEditForm(props) {
     const [featured, setFeatured] = useState(props.initialValues.featured);
     const [item, setItem] = useState(null);
     const [open, setOpen] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date());
 
 
     const handleSubmit = (e, { setSubmitting }) => {
@@ -42,11 +43,8 @@ function AddEditForm(props) {
     }
 
     const handleSwitchChange = (e) => {
-        setFeatured(e.target.checked);
-    }
-
-    const handleDateChange = (e) => {
         console.log(e);
+        setFeatured(e.target.checked);
     }
 
     return (
@@ -56,7 +54,7 @@ function AddEditForm(props) {
                 onSubmit={handleSubmit}
                 validationSchema={props.validationSchema}
             >
-                {({ isSubmitting, errors, touched, values, handleChange, resetForm }) => (
+                {({ isSubmitting, errors, touched, values, handleChange, resetForm, setFieldValue }) => (
                     <Form>
                         {Object.keys(props.initialValues).map(x => {
                             return x === 'featured'
@@ -67,31 +65,36 @@ function AddEditForm(props) {
                                             label={x}
                                         />
                                     </div>
-                                )
-                                // : x === 'dateTime'
-                                //     ? (<div>
-                                //         <KeyboardDateTimePicker
-                                //             value={selectedDate}
-                                //             onChange={handleDateChange}
-                                //             label={x}
-                                //             onError={console.log}
-                                //             minDate={new Date()}
-                                //             format="yyyy/MM/dd hh:mm a"
-                                //         />
-                                //     </div>)
-                                : (
-                                    <div>
-                                        <TextField
-                                            id={x}
-                                            name={x}
-                                            type={x}
-                                            label={x}
-                                            value={values[x]}
-                                            onChange={handleChange}
-                                            error={touched[x] && !!errors[x]}
-                                            helperText={errors[x]} />
-                                    </div>
-                                );
+                                ) : x === 'dateTime'
+                                    ? (<div>
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <KeyboardDateTimePicker
+                                                id={x}
+                                                name={x}
+                                                value={values[x]}
+                                                onChange={date => setFieldValue(x, date)}
+                                                label={x}
+                                                onError={console.log}
+                                                minDate={new Date()}
+                                                format="yyyy/MM/dd hh:mm a"
+                                                error={touched[x] && !!errors[x]}
+                                                helperText={errors[x]}
+                                            />
+                                        </MuiPickersUtilsProvider>
+                                    </div>)
+                                    : (
+                                        <div>
+                                            <TextField
+                                                id={x}
+                                                name={x}
+                                                type={x}
+                                                label={x}
+                                                value={values[x]}
+                                                onChange={handleChange}
+                                                error={touched[x] && !!errors[x]}
+                                                helperText={errors[x]} />
+                                        </div>
+                                    );
 
                         })}
 
