@@ -1,5 +1,5 @@
 import { Button, Dialog, FormControlLabel, Switch, TextField } from "@material-ui/core";
-import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { Form, Formik } from "formik";
 import DateFnsUtils from "@date-io/date-fns";
 import { useContext, useState } from "react";
@@ -7,7 +7,6 @@ import LoadingContext from "../context/loadingContext";
 import NotificationContext from "../context/notificationContext";
 import * as handleSubmission from '../utils/handleSubmission';
 import ItemCard from "./ItemCard";
-import { Timestamp } from "../utils/firebase-config";
 
 function AddEditForm(props) {
 
@@ -23,14 +22,13 @@ function AddEditForm(props) {
             setIsLoading(true);
             handleSubmission[props.type](e)
                 .then(i => {
-                    console.log(i);
                     setItem(Object.assign(i, featured));
                     setSubmitting(false);
                     setOpen(true);
                     setIsLoading(false);
                 })
                 .catch(err => {
-                    console.error(err);
+                    setIsLoading(false);
                     setNotification(err);
                     setSubmitting(false);
                 });
@@ -43,7 +41,6 @@ function AddEditForm(props) {
     }
 
     const handleSwitchChange = (e) => {
-        console.log(e);
         setFeatured(e.target.checked);
     }
 
@@ -68,15 +65,17 @@ function AddEditForm(props) {
                                 ) : x === 'dateTime'
                                     ? (<div>
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                            <KeyboardDateTimePicker
+                                            <DateTimePicker
+                                                InputLabelProps={{ shrink: true }}
                                                 id={x}
+                                                ampm={false}
                                                 name={x}
                                                 value={values[x]}
                                                 onChange={date => setFieldValue(x, date)}
                                                 label={x}
                                                 onError={console.log}
                                                 minDate={new Date()}
-                                                format="yyyy/MM/dd hh:mm a"
+                                                format="yyyy/MM/dd hh:mm"
                                                 error={touched[x] && !!errors[x]}
                                                 helperText={errors[x]}
                                             />
