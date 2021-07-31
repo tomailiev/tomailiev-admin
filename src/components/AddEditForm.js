@@ -1,4 +1,4 @@
-import { Button, Dialog, FormControlLabel, Switch, TextField } from "@material-ui/core";
+import { Box, Button, Dialog, FormControlLabel, Switch, TextField } from "@material-ui/core";
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { Form, Formik } from "formik";
 import DateFnsUtils from "@date-io/date-fns";
@@ -45,7 +45,7 @@ function AddEditForm(props) {
     }
 
     return (
-        <div>
+        <Box textAlign="center">
             <Formik
                 initialValues={props.initialValues}
                 onSubmit={handleSubmit}
@@ -104,7 +104,7 @@ function AddEditForm(props) {
                 )}
             </Formik>
             {item && <Dialog open={open} onClose={() => setOpen(false)}><ItemCard item={item} /></Dialog>}
-        </div >
+        </Box>
     )
 }
 

@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem } from "@material-ui/core";
+import { Box, Button, ButtonGroup, Container, Menu, MenuItem, Paper } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoadingContext from "../context/loadingContext";
@@ -37,30 +37,36 @@ function Portal({ history }) {
         setAnchors(prev => ({ ...prev, actions: null }));
     }
 
-    return <div>
-        <h2>
-            Welcome to the Portal
-        </h2>
-        <h6>What would you like to do?</h6>
-        <section>
-            <Button variant="contained" onClick={handleActionMenuOpen}>{action}</Button>
-            <Menu anchorEl={anchors.actions} open={!!anchors.actions} keepMounted onClick={handleActionChoice}>
-                <MenuItem>view</MenuItem>
-                <MenuItem>add</MenuItem>
-            </Menu>
-            <Button variant="contained" onClick={handleItemMenuOpen}>{item}</Button>
-            <Menu anchorEl={anchors.items} open={!!anchors.items} keepMounted onClick={handleItemChoice}>
-                <MenuItem>events</MenuItem>
-                <MenuItem>audios</MenuItem>
-                <MenuItem>images</MenuItem>
-                <MenuItem>videos</MenuItem>
-                <MenuItem>recs</MenuItem>
-            </Menu>
-            <Button  variant="contained" color="secondary" disabled={item === 'items...' || action === 'actions...'}>
-                <Link to={`${action}/${item}`}>GO!</Link>
-            </Button>
-        </section>
-    </div>
+    return <Container maxWidth="sm">
+        <Box textAlign="center">
+            <h2>
+                Welcome to the Portal
+            </h2>
+            <h6>What would you like to do?</h6>
+            <section>
+                <ButtonGroup color="primary" variant="outlined">
+                    <Button variant="contained" onClick={handleActionMenuOpen}>{action}</Button>
+                    <Menu anchorEl={anchors.actions} open={!!anchors.actions} keepMounted onClick={handleActionChoice}>
+                        <MenuItem>view</MenuItem>
+                        <MenuItem>add</MenuItem>
+                    </Menu>
+                    <Button variant="contained" onClick={handleItemMenuOpen}>{item}</Button>
+                    <Menu anchorEl={anchors.items} open={!!anchors.items} keepMounted onClick={handleItemChoice}>
+                        <MenuItem>events</MenuItem>
+                        <MenuItem>audios</MenuItem>
+                        <MenuItem>images</MenuItem>
+                        <MenuItem>videos</MenuItem>
+                        <MenuItem>recs</MenuItem>
+                    </Menu>
+                </ButtonGroup>
+                <Box padding={2}>
+                    <Button variant="contained" color="secondary" disabled={item === 'items...' || action === 'actions...'}>
+                        <Link to={`${action}/${item}`}>GO!</Link>
+                    </Button>
+                </Box>
+            </section>
+        </Box>
+    </Container>
 }
 
 export default Portal;

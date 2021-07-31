@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Box, Button, Container, Grid } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import * as initialValues from '../utils/initialValues';
 import * as validationSchemas from '../utils/yup-schemas';
@@ -16,10 +16,12 @@ function AddItem({ location }) {
     }
 
     return (
-        <div>
+        <Container maxWidth="sm">
             {formObjects.map((x, i) => <div key={i}>{x}</div>)}
-            < Button variant="contained" onClick={handleAddItem} > Add new {formType}...</Button >
-        </div>
+            <Box textAlign="center">
+                <Button variant="contained" onClick={handleAddItem} > Add new {formType}...</Button >
+            </Box>
+        </Container>
     )
 }
 

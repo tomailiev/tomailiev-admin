@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { AppBar, Button, Typography } from '@material-ui/core'
+import { AppBar, Button, Toolbar, Typography } from '@material-ui/core'
 import { useContext } from "react";
 import { NavLink } from 'react-router-dom';
 import NotificationContext from '../context/notificationContext';
@@ -22,8 +22,10 @@ function Header() {
 
     return (
         <AppBar position="static">
-            <Button color="inherit"><NavLink to="/">Home</NavLink></Button>
-            {user && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
+            <Toolbar>
+                <Button color="inherit"><NavLink to="/">Home</NavLink></Button>
+                {user && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
+            </Toolbar>
         </AppBar>
     )
 }
