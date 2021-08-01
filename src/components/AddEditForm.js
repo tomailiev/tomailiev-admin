@@ -97,9 +97,7 @@ function AddEditForm(props) {
                                                 helperText={errors[x]} />
                                         </div>
                                     );
-
                         })}
-
                         <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>Preview</Button>
                         <Button variant="contained" color="primary" type="button" onClick={() => { resetForm(); setCurrentItem(null); }} >Cancel</Button>
 

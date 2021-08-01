@@ -27,7 +27,7 @@ const Items = ({ location }) => {
         <Container maxWidth="lg">
             <Grid container justifyContent="space-evenly" alignItems="stretch" direction="row" spacing={2}>
                 {items.map(x => (
-                    <Grid item xs={12} sm={6} md={3} alignItems="stretch">
+                    <Grid container item xs={12} sm={6} md={3} alignItems="stretch">
                         <ItemCard item={x} key={x.id} />
                     </Grid>
                 )
