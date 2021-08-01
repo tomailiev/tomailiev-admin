@@ -13,11 +13,13 @@ import NotificationContext from './context/notificationContext';
 import Items from './components/Items';
 import WithAuthGuard from './components/WithAuthGuard';
 import AddItem from './components/AddItem';
+import ItemContext from './context/itemContext';
 
 function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [notification, setNotification] = useState({ open: false, message: '' });
+  const [currentItem, setCurrentItem] = useState(null);
 
   useEffect(() => {
     auth.onAuthStateChanged((u) => {
@@ -45,19 +47,21 @@ function App() {
         <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
           <UserContext.Provider value={{ user, setUser }}>
             <NotificationContext.Provider value={{ notification, setNotification }}>
-              <Router>
-                <Backdrop open={isLoading}>
-                  <CircularProgress color="primary" />
-                </Backdrop>
-                <Header />
-                <Switch>
-                  <Route exact path="/" component={Switcher} />
-                  <WithAuthGuard path="/login" component={Login} shouldAuth={false} />
-                  <WithAuthGuard path="/portal" component={Portal} shouldAuth={true} />
-                  <WithAuthGuard path="/view/" component={Items} shouldAuth={true} />
-                  <WithAuthGuard path="/add/" component={AddItem} shouldAuth={true} />
-                </Switch>
-              </Router>
+              <ItemContext.Provider value={{ currentItem, setCurrentItem }} >
+                <Router>
+                  <Backdrop open={isLoading}>
+                    <CircularProgress color="primary" />
+                  </Backdrop>
+                  <Header />
+                  <Switch>
+                    <Route exact path="/" component={Switcher} />
+                    <WithAuthGuard path="/login" component={Login} shouldAuth={false} />
+                    <WithAuthGuard path="/portal" component={Portal} shouldAuth={true} />
+                    <WithAuthGuard path="/view/" component={Items} shouldAuth={true} />
+                    <WithAuthGuard path="/add/" component={AddItem} shouldAuth={true} />
+                  </Switch>
+                </Router>
+              </ItemContext.Provider>
               <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={notification.open}

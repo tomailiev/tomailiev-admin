@@ -21,7 +21,10 @@ function audio({ audioUrl }) {
                 description: artistName,
                 audioUrl: `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${id}&color=%23b55e33&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`
             };
-        });
+        })
+        .catch(e => {
+            throw new Error('X hit the fan. Better luck next time');
+        })
 }
 
 function rec({ spotifyUrl, infoUrl }) {

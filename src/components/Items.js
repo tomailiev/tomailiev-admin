@@ -19,14 +19,19 @@ const Items = ({ location }) => {
             })
             .catch(err => {
                 setIsLoading(false);
-                setNotification(err.message)
+                setNotification({open: true, message: err.message})
             });
     }, [location.pathname, setIsLoading, setNotification]);
 
     return (
         <Container maxWidth="lg">
             <Grid container justifyContent="space-evenly" alignItems="stretch" direction="row" spacing={2}>
-                {items.map(x => <ItemCard item={x} key={x.id} />)}
+                {items.map(x => (
+                    <Grid item xs={12} sm={6} md={3} alignItems="stretch">
+                        <ItemCard item={x} key={x.id} />
+                    </Grid>
+                )
+                )}
             </Grid>
         </Container>
     )
