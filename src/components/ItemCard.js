@@ -1,9 +1,13 @@
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, Grid } from "@material-ui/core";
+import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, TextField } from "@material-ui/core";
+import { Form, Formik } from "formik";
+import { useState } from "react";
 
 function ItemCard({ item, editMode }) {
 
+    const [editing, setEditing] = useState(editMode);
+
     function toggleEdit(e) {
-        console.log(item);
+        setEditing(!editing);
     }
 
     return (
@@ -17,17 +21,39 @@ function ItemCard({ item, editMode }) {
                     title="there should be a pic here"
                 />}
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    {editing &&
+                        <Formik initialValues={item} onSubmit={toggleEdit}>
+                            {() => {
+                                return <Form>
+                                    {Object.entries(item).map(([key, val]) => {
+                                        console.log(key, val);
+                                        return (
+                                            <TextField
+                                                key={key}
+                                                value={val}
+                                                id={key}
+                                                name={key}
+                                                type={key}
+                                                label={key}
+                                                multiline
+                                            />
+                                        )
+                                    })}
+                                    <Button type="submit" >Submit</Button>
+                                </Form>
+                            }}
+                        </Formik>}
+                    {!editing && <><Typography gutterBottom variant="h5" component="h2">
                         {item.title || item.eventName || item.caption}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {item.description || item.groupName}
-                    </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {item.description || item.groupName}
+                        </Typography></>}
                 </CardContent>
             </CardActionArea>
             <CardActions>
                 <Button onClick={toggleEdit} size="small" color="primary">
-                    {editMode ? 'Save' : 'Edit'}
+                    {editing ? 'Save' : 'Edit'}
                 </Button>
                 <Button size="small" color="primary">
                     Delete

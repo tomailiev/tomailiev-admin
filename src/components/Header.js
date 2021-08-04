@@ -23,6 +23,7 @@ function Header() {
     return (
         <AppBar position="static">
             <Toolbar>
+                <div style={{ flexGrow: 1 }}></div>
                 <Button color="inherit"><NavLink style={{ textDecoration: 'none', color: 'inherit' }} to="/">Home</NavLink></Button>
                 {user && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
             </Toolbar>

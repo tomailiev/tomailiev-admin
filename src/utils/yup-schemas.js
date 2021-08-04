@@ -19,7 +19,7 @@ const event = yup.object().shape({
     eventUrl: yup.string().url().required(),
     groupName: yup.string().required(),
     location: yup.string(),
-    venue: yup.string().required()
+    venue: yup.string()
 });
 
 const image = yup.object().shape({

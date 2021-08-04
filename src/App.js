@@ -19,7 +19,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [notification, setNotification] = useState({ open: false, message: '' });
-  const [currentItem, setCurrentItem] = useState(null);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     auth.onAuthStateChanged((u) => {
@@ -47,7 +47,7 @@ function App() {
         <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
           <UserContext.Provider value={{ user, setUser }}>
             <NotificationContext.Provider value={{ notification, setNotification }}>
-              <ItemContext.Provider value={{ currentItem, setCurrentItem }} >
+              <ItemContext.Provider value={{ items, setItems }} >
                 <Router>
                   <Backdrop open={isLoading}>
                     <CircularProgress color="primary" />

@@ -1,5 +1,6 @@
 import { Container, Grid } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
+import ItemContext from "../context/itemContext";
 import LoadingContext from "../context/loadingContext";
 import NotificationContext from "../context/notificationContext";
 import { getContent } from "../utils/firebase-db"
@@ -8,7 +9,7 @@ import ItemCard from "./ItemCard";
 const Items = ({ location }) => {
     const { setIsLoading } = useContext(LoadingContext);
     const { setNotification } = useContext(NotificationContext);
-    const [items, setItems] = useState([]);
+    const { items, setItems } = useContext(ItemContext);
 
     useEffect(() => {
         setIsLoading(true);
@@ -19,9 +20,11 @@ const Items = ({ location }) => {
             })
             .catch(err => {
                 setIsLoading(false);
-                setNotification({open: true, message: err.message})
+                setNotification({ open: true, message: err.message })
             });
-    }, [location.pathname, setIsLoading, setNotification]);
+
+        return () => setItems([]);
+    }, [location.pathname, setIsLoading, setNotification, setItems]);
 
     return (
         <Container maxWidth="lg">
