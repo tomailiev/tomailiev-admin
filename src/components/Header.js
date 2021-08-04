@@ -23,7 +23,7 @@ function Header() {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Button color="inherit"><NavLink to="/">Home</NavLink></Button>
+                <Button color="inherit"><NavLink style={{ textDecoration: 'none', color: 'inherit' }} to="/">Home</NavLink></Button>
                 {user && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
             </Toolbar>
         </AppBar>

@@ -60,8 +60,8 @@ function Portal({ history }) {
                     </Menu>
                 </ButtonGroup>
                 <Box padding={2}>
-                    <Button variant="contained" color="secondary" disabled={item === 'items...' || action === 'actions...'}>
-                        <Link to={`${action}/${item}`}>GO!</Link>
+                    <Button variant="contained" color="primary" disabled={item === 'items...' || action === 'actions...'}>
+                        <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`${action}/${item}`}>GO!</Link>
                     </Button>
                 </Box>
             </section>

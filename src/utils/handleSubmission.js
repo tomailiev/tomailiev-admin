@@ -9,7 +9,10 @@ function video({ youtubeUrl }) {
                 description: artistName,
                 videoUrl: `https://www.youtube.com/embed/${id}`,
             };
-        });
+        })
+        .catch(e => {
+            console.log(e);
+        })
 }
 
 function audio({ audioUrl }) {

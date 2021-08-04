@@ -1,11 +1,9 @@
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, Grid } from "@material-ui/core";
-import { useContext } from "react";
-import ItemContext from "../context/itemContext";
 
-function ItemCard({ item }) {
-    const { setCurrentItem } = useContext(ItemContext);
-    function handleEdit(e) {
-        setCurrentItem(item);
+function ItemCard({ item, editMode }) {
+
+    function toggleEdit(e) {
+        console.log(item);
     }
 
     return (
@@ -28,8 +26,8 @@ function ItemCard({ item }) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button onClick={handleEdit} size="small" color="primary">
-                    Edit
+                <Button onClick={toggleEdit} size="small" color="primary">
+                    {editMode ? 'Save' : 'Edit'}
                 </Button>
                 <Button size="small" color="primary">
                     Delete
