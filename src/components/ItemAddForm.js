@@ -8,7 +8,7 @@ import NotificationContext from "../context/notificationContext";
 import * as handleSubmission from '../utils/handleSubmission';
 import ItemCard from "./ItemCard";
 
-function AddEditForm(props) {
+function ItemAddForm(props) {
 
     const { setNotification } = useContext(NotificationContext);
     const { setIsLoading } = useContext(LoadingContext);
@@ -22,7 +22,7 @@ function AddEditForm(props) {
             setIsLoading(true);
             handleSubmission[props.type](e)
                 .then(i => {
-                    setItem(Object.assign(i, featured));
+                    setItem(Object.assign(i, { featured }));
                     setSubmitting(false);
                     setOpen(true);
                     setIsLoading(false);
@@ -107,4 +107,4 @@ function AddEditForm(props) {
     )
 }
 
-export default AddEditForm
+export default ItemAddForm

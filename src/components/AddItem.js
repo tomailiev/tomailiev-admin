@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import LoadingContext from "../context/loadingContext";
 import * as initialValues from '../utils/initialValues';
 import * as validationSchemas from '../utils/yup-schemas';
-import AddEditForm from "./AddEditForm";
+import ItemAddForm from "./ItemAddForm";
 
 function AddItem({ location }) {
     const { isLoading } = useContext(LoadingContext);
@@ -14,7 +14,7 @@ function AddItem({ location }) {
     }, [location.pathname]);
 
     function handleAddItem(e) {
-        setFormObjects(prev => prev.concat(<AddEditForm initialValues={initialValues[formType]} validationSchema={validationSchemas[formType]} type={formType} />));
+        setFormObjects(prev => prev.concat(<ItemAddForm initialValues={initialValues[formType]} validationSchema={validationSchemas[formType]} type={formType} />));
     }
 
     return (
