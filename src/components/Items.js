@@ -13,7 +13,8 @@ const Items = ({ location }) => {
 
     useEffect(() => {
         setIsLoading(true);
-        getContent(location.pathname.substring(6))
+        const type = location.pathname.substring(6)
+        getContent(type)
             .then(i => {
                 setItems(i);
                 setIsLoading(false);
@@ -30,8 +31,8 @@ const Items = ({ location }) => {
         <Container maxWidth="lg">
             <Grid container justifyContent="space-evenly" alignItems="stretch" direction="row" spacing={2}>
                 {items.map(x => (
-                    <Grid container item xs={12} sm={6} md={3} alignItems="stretch">
-                        <ItemCard item={x} key={x.id} />
+                    <Grid container item xs={12} sm={6} md={3} alignItems="stretch" key={x.id}>
+                        <ItemCard item={x} type={location.pathname.substring(6)} />
                     </Grid>
                 )
                 )}

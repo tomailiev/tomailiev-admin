@@ -2,7 +2,7 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, 
 import { useState } from "react";
 import ItemEditCard from "./ItemEditCard";
 
-function ItemCard({ item }) {
+function ItemCard({ item, type }) {
 
     const [editing, setEditing] = useState(false);
 
@@ -11,7 +11,7 @@ function ItemCard({ item }) {
     }
 
     return editing
-        ? <ItemEditCard item={item} switchEditing={switchEditing} />
+        ? <ItemEditCard item={item} type={type} switchEditing={switchEditing} />
         : <Card>
             <CardActionArea>
                 {(item.imageUrl || item.audioUrl || item.videoUrl) && <CardMedia
@@ -34,9 +34,9 @@ function ItemCard({ item }) {
                 <Button size="small" color="primary" onClick={switchEditing}>
                     Edit
                 </Button>
-                <Button size="small" color="primary" onClick={() => setEditing(false)}>
+                {/* <Button size="small" color="primary" onClick={() => setEditing(false)}>
                     Delete
-                </Button>
+                </Button> */}
             </CardActions>
         </Card>
 

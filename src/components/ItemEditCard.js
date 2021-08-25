@@ -3,16 +3,19 @@ import { Button, Card, CardActions, CardContent, FormControlLabel, Switch, TextF
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { useState } from "react";
+import { uploadData } from "../utils/firebase-db";
 
 
-function ItemEditCard({ item, switchEditing }) {
+function ItemEditCard({ item, switchEditing, type }) {
 
     const [featured, setFeatured] = useState(!!item.featured);
-    const [eventDate, setEventDate] = useState(item.dateTime?.toDate());
+    const [eventDate, setEventDate] = useState(item.dateTime instanceof Date ? item.dateTime : item.dateTime?.toDate());
 
     function handleSubmit(e, o) {
-        console.log(e);
         switchEditing();
+        uploadData(type, e)
+            .then(console.log)
+            .catch(console.error);
     }
 
     return (
@@ -67,7 +70,7 @@ function ItemEditCard({ item, switchEditing }) {
                                                     value={values[key]}
                                                     onChange={handleChange}
                                                     error={touched[key] && !!errors[key]}
-                                                    helperTekeyt={errors[key]} />
+                                                    helperText={errors[key]} />
                                             </div>
                                         );
                             })}
@@ -76,7 +79,7 @@ function ItemEditCard({ item, switchEditing }) {
                             <Button size="small" color="primary" type="submit">
                                 Save
                             </Button>
-                            <Button size="small" color="primary" onClick={() => resetForm()}>
+                            <Button size="small" color="primary" onClick={() => {resetForm(); switchEditing();}}>
                                 Cancel
                             </Button>
                         </CardActions>

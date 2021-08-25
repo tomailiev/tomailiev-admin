@@ -13,11 +13,20 @@ function getContent(type) {
 }
 
 function uploadData(type, item) {
-    const upload = type === 'events'
-        ? { ...item, dateTime: Timestamp.fromDate(item.dateTime) }
-        : item
+    const collection = type.endsWith('s') ? type : type + 's';
+    const upload = collection === 'events' && item.dateTime instanceof Date
+    ? { ...item, dateTime: Timestamp.fromDate(item.dateTime) }
+    : item
+    
+    if (item.id) {
+        return db.collection(collection)
+            .doc(item.id)
+            .set(upload)
+            .then(console.log)
+            .catch(console.error);
+    }
 
-    db.collection(type)
+    return db.collection(collection)
         .add(upload)
         .then(console.log)
         .catch(console.error());

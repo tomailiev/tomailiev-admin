@@ -57,14 +57,14 @@ function ItemAddForm(props) {
                         {Object.keys(props.initialValues).map(x => {
                             return x === 'featured'
                                 ? (
-                                    <div>
+                                    <div key={x}>
                                         <FormControlLabel
                                             control={<Switch checked={featured} onChange={handleSwitchChange} name="checkedA" />}
                                             label={x}
                                         />
                                     </div>
                                 ) : x === 'dateTime'
-                                    ? (<div>
+                                    ? (<div key={x}>
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                             <DateTimePicker
                                                 InputLabelProps={{ shrink: true }}
@@ -83,7 +83,7 @@ function ItemAddForm(props) {
                                         </MuiPickersUtilsProvider>
                                     </div>)
                                     : (
-                                        <div>
+                                        <div key={x}>
                                             <TextField
                                                 id={x}
                                                 name={x}
@@ -102,7 +102,7 @@ function ItemAddForm(props) {
                     </Form>
                 )}
             </Formik>
-            {item && <Dialog open={open} onClose={() => setOpen(false)}><ItemCard item={item} /></Dialog>}
+            {item && <Dialog open={open} onClose={() => setOpen(false)}><ItemCard type={props.type} item={item} /></Dialog>}
         </Box>
     )
 }
