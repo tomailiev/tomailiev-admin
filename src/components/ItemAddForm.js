@@ -1,12 +1,14 @@
 import { Box, Button, Dialog, FormControlLabel, Switch, TextField } from "@material-ui/core";
+import { Autocomplete } from '@material-ui/lab';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { Form, Formik } from "formik";
 import DateFnsUtils from "@date-io/date-fns";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoadingContext from "../context/loadingContext";
 import NotificationContext from "../context/notificationContext";
 import * as handleSubmission from '../utils/handleSubmission';
 import ItemCard from "./ItemCard";
+import { getContent } from "../utils/firebase-db";
 
 function ItemAddForm(props) {
 
@@ -15,7 +17,15 @@ function ItemAddForm(props) {
     const [featured, setFeatured] = useState(props.initialValues.featured);
     const [item, setItem] = useState(null);
     const [open, setOpen] = useState(false);
+    const [groups, setGroups] = useState([{ name: 'pbo', id: '12h3' }, { name: 'abs', id: '4ha83' }]);
 
+    // useEffect(() => {
+    //     if (props.type === 'events') {
+    //         getContent('groups')
+    //             .then(setGroups)
+    //             .catch(e => setNotification(e.message));
+    //     }
+    // }, [props.type, setNotification]);
 
     const handleSubmit = (e, { setSubmitting }) => {
         if (handleSubmission[props.type]) {
@@ -82,19 +92,40 @@ function ItemAddForm(props) {
                                             />
                                         </MuiPickersUtilsProvider>
                                     </div>)
-                                    : (
-                                        <div key={x}>
-                                            <TextField
-                                                id={x}
-                                                name={x}
-                                                type={x}
-                                                label={x}
-                                                value={values[x]}
-                                                onChange={handleChange}
-                                                error={touched[x] && !!errors[x]}
-                                                helperText={errors[x]} />
-                                        </div>
-                                    );
+                                    : x === 'groupName'
+                                        ? (
+                                            <div key={x}>
+                                                <Autocomplete
+                                                    freeSolo
+                                                    options={groups}
+                                                    getOptionLabel={option => option.name}
+                                                    renderInput={(params) => (
+                                                        <TextField {...params}
+                                                            name={x}
+                                                            id={x}
+                                                            type={x}
+                                                            label={x}
+                                                            value={values[x]}
+                                                            onChange={handleChange}
+                                                            error={touched[x] && !!errors[x]}
+                                                            helperText={errors[x]} />
+                                                    )}
+                                                />
+                                            </div>
+                                        )
+                                        : (
+                                            <div key={x}>
+                                                <TextField
+                                                    id={x}
+                                                    name={x}
+                                                    type={x}
+                                                    label={x}
+                                                    value={values[x]}
+                                                    onChange={handleChange}
+                                                    error={touched[x] && !!errors[x]}
+                                                    helperText={errors[x]} />
+                                            </div>
+                                        );
                         })}
                         <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>Preview</Button>
                         <Button variant="contained" color="primary" type="button" onClick={() => resetForm()} >Cancel</Button>
