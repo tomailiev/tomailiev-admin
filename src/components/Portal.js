@@ -44,7 +44,7 @@ function Portal({ history }) {
             </h2>
             <h6>What would you like to do?</h6>
             <section>
-                <ButtonGroup color="primary" variant="outlined">
+                <ButtonGroup color="primary">
                     <Button variant="contained" onClick={handleActionMenuOpen}>{action}</Button>
                     <Menu anchorEl={anchors.actions} open={!!anchors.actions} keepMounted onClick={handleActionChoice}>
                         <MenuItem>view</MenuItem>

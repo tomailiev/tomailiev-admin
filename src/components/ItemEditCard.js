@@ -2,12 +2,14 @@ import { Form, Formik } from "formik";
 import { Button, Card, CardActions, CardContent, FormControlLabel, Switch, TextField } from '@material-ui/core'
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { uploadData } from "../utils/firebase-db";
+import TypeContext from "../context/typeContext";
 
 
-function ItemEditCard({ item, switchEditing, type }) {
+function ItemEditCard({ item, switchEditing }) {
 
+    const { type } = useContext(TypeContext);
     const [featured, setFeatured] = useState(!!item.featured);
     const [eventDate, setEventDate] = useState(item.dateTime instanceof Date ? item.dateTime : item.dateTime?.toDate());
 
@@ -79,7 +81,7 @@ function ItemEditCard({ item, switchEditing, type }) {
                             <Button size="small" color="primary" type="submit">
                                 Save
                             </Button>
-                            <Button size="small" color="primary" onClick={() => {resetForm(); switchEditing();}}>
+                            <Button size="small" color="primary" onClick={() => { resetForm(); switchEditing(); }}>
                                 Cancel
                             </Button>
                         </CardActions>

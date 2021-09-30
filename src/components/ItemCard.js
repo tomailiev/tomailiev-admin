@@ -1,9 +1,11 @@
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from "@material-ui/core";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import TypeContext from "../context/typeContext";
 import ItemEditCard from "./ItemEditCard";
 
-function ItemCard({ item, type }) {
+function ItemCard({ item }) {
 
+    const { type } = useContext(TypeContext);
     const [editing, setEditing] = useState(false);
 
     function switchEditing() {

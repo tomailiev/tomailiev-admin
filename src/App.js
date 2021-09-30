@@ -14,12 +14,14 @@ import Items from './components/Items';
 import WithAuthGuard from './components/WithAuthGuard';
 import AddItem from './components/AddItem';
 import ItemContext from './context/itemContext';
+import TypeContext from './context/typeContext';
 
 function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [notification, setNotification] = useState({ open: false, message: '' });
   const [items, setItems] = useState([]);
+  const [type, setType] = useState('');
 
   useEffect(() => {
     auth.onAuthStateChanged((u) => {
@@ -48,19 +50,21 @@ function App() {
           <UserContext.Provider value={{ user, setUser }}>
             <NotificationContext.Provider value={{ notification, setNotification }}>
               <ItemContext.Provider value={{ items, setItems }} >
-                <Router>
-                  <Backdrop open={isLoading}>
-                    <CircularProgress color="primary" />
-                  </Backdrop>
-                  <Header />
-                  <Switch>
-                    <Route exact path="/" component={Switcher} />
-                    <WithAuthGuard path="/login" component={Login} shouldAuth={false} />
-                    <WithAuthGuard path="/portal" component={Portal} shouldAuth={true} />
-                    <WithAuthGuard path="/view/" component={Items} shouldAuth={true} />
-                    <WithAuthGuard path="/add/" component={AddItem} shouldAuth={true} />
-                  </Switch>
-                </Router>
+                <TypeContext.Provider value={{ type, setType }}>
+                  <Router>
+                    <Backdrop open={isLoading}>
+                      <CircularProgress color="primary" />
+                    </Backdrop>
+                    <Header />
+                    <Switch>
+                      <Route exact path="/" component={Switcher} />
+                      <WithAuthGuard path="/login" component={Login} shouldAuth={false} />
+                      <WithAuthGuard path="/portal" component={Portal} shouldAuth={true} />
+                      <WithAuthGuard path="/view/" component={Items} shouldAuth={true} />
+                      <WithAuthGuard path="/add/" component={AddItem} shouldAuth={true} />
+                    </Switch>
+                  </Router>
+                </TypeContext.Provider>
               </ItemContext.Provider>
               <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
