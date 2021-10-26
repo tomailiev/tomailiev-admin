@@ -1,8 +1,9 @@
-const odesliUri = 'https://api.song.link/v1-alpha.1/links?userCountry=US&url='
-
 function getOdesliLinks(url) {
-    return fetch(`${odesliUri}${encodeURIComponent(url)}`)
-        .then(x => x.json())
+    return fetch(`http://localhost:5001/toma-iliev/us-central1/api/getOdesliLinks/${encodeURIComponent(url)}`)
+        .then(x => {
+            console.log(x);
+            return x.json();
+        })
         .catch(e => {
             console.log(e.code);
         });
