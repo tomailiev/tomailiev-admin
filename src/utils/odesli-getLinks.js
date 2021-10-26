@@ -1,5 +1,5 @@
 function getOdesliLinks(url) {
-    return fetch(`http://localhost:5001/toma-iliev/us-central1/api/getOdesliLinks/${encodeURIComponent(url)}`)
+    return fetch(`https://us-central1-toma-iliev.cloudfunctions.net/api/getOdesliLinks/${encodeURIComponent(url)}`)
         .then(x => {
             console.log(x);
             return x.json();
