@@ -1,5 +1,6 @@
 function getOdesliLinks(url) {
-    return fetch(`https://us-central1-toma-iliev.cloudfunctions.net/api/getOdesliLinks/${encodeURIComponent(url)}`)
+    const encoded = encodeURIComponent(url);
+    return fetch(`https://us-central1-toma-iliev.cloudfunctions.net/api/odesli?uri=${encoded}`)
         .then(x => {
             console.log(x);
             return x.json();
