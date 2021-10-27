@@ -14,6 +14,9 @@ function ItemEditCard({ item, switchEditing }) {
     const [eventDate, setEventDate] = useState(item.dateTime instanceof Date ? item.dateTime : item.dateTime?.toDate());
 
     function handleSubmit(e, o) {
+        if (type === 'events') {
+            e.dateTime = eventDate
+        }
         switchEditing();
         uploadData(type, e)
             .then(console.log)

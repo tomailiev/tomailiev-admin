@@ -29,7 +29,7 @@ function uploadData(type, item) {
     return db.collection(collection)
         .add(upload)
         .then(console.log)
-        .catch(console.error());
+        .catch(console.error);
 }
 
 export { getContent, uploadData };

@@ -16,11 +16,11 @@ function ItemCard({ item }) {
         ? <ItemEditCard item={item} type={type} switchEditing={switchEditing} />
         : <Card>
             <CardActionArea>
-                {(item.imageUrl || item.audioUrl || item.videoUrl) && <CardMedia
+                {(item.imageUrl || item.audioUrl || item.videoUrl || item.mapCoordinates) && <CardMedia
                     component={item.imageUrl ? 'img' : 'iframe'}
                     alt="there should be a pic here"
                     width="100%"
-                    src={item.imageUrl || item.audioUrl || item.videoUrl}
+                    src={item.imageUrl || item.audioUrl || item.videoUrl || item.mapCoordinates}
                     title="there should be a pic here"
                 />}
                 <CardContent>
@@ -30,6 +30,9 @@ function ItemCard({ item }) {
                     <Typography variant="body2" color="textSecondary" component="p">
                         {item.description || item.groupName}
                     </Typography>
+                    {/* {item.dateTime && <Typography gutterBottom variant="h5" component="h2">
+                        {item.dateTime.toDate().toString()}
+                    </Typography>} */}
                 </CardContent>
             </CardActionArea>
             <CardActions>
