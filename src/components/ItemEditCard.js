@@ -11,7 +11,11 @@ function ItemEditCard({ item, switchEditing }) {
 
     const { type } = useContext(TypeContext);
     const [featured, setFeatured] = useState(!!item.featured);
-    const [eventDate, setEventDate] = useState(item.dateTime instanceof Date ? item.dateTime : item.dateTime?.toDate());
+    const [eventDate, setEventDate] = useState(item.dateTime instanceof Date
+        ? item.dateTime
+        : item.dateTime instanceof Object
+            ? item.dateTime?.toDate()
+            : new Date(item.dateTime));
 
     function handleSubmit(e, o) {
         if (type === 'events') {

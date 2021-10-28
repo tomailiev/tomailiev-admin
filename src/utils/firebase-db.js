@@ -14,10 +14,10 @@ function getContent(type) {
 
 function uploadData(type, item) {
     const collection = type.endsWith('s') ? type : type + 's';
-    const upload = collection === 'events' && item.dateTime instanceof Date
-    ? { ...item, dateTime: Timestamp.fromDate(item.dateTime) }
-    : item
-    
+    const upload = collection === 'events'
+        ? { ...item, dateTime: Timestamp.fromDate(new Date(item.dateTime)) }
+        : item
+
     if (item.id) {
         return db.collection(collection)
             .doc(item.id)

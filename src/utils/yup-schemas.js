@@ -17,7 +17,7 @@ const event = yup.object().shape({
     dateTime: yup.date().required(),
     eventName: yup.string().required(),
     eventUrl: yup.string().url().required(),
-    groupName: yup.string().required(),
+    // groupName: yup.string().required(),
     location: yup.string(),
     venue: yup.string()
 });
