@@ -1,6 +1,8 @@
+import { api } from '../config';
+
 function getOdesliLinks(url) {
     const encoded = encodeURIComponent(url);
-    return fetch(`https://us-central1-toma-iliev.cloudfunctions.net/api/odesli?uri=${encoded}`)
+    return fetch(`${api}/odesli?uri=${encoded}`)
         .then(x => {
             console.log(x);
             return x.json();

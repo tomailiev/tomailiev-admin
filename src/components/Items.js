@@ -32,7 +32,7 @@ const Items = ({ location }) => {
     }, [location.pathname, setIsLoading, setNotification, setItems, setType, type]);
 
     return (
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" style={{paddingTop: 10}}>
             <Grid container justifyContent="space-evenly" alignItems="stretch" direction="row" spacing={2}>
                 {items.map(x => (
                     <Grid container item xs={12} sm={6} md={3} alignItems="stretch" key={x.id}>
