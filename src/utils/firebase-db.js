@@ -6,7 +6,11 @@ function getContent(type) {
         .then(querySnapshot => {
             const docs = [];
             querySnapshot.forEach(x => {
-                docs.push(Object.assign({ id: x.id }, x.data()));
+                const item = x.data();
+                if (type === 'events') {
+                    item.dateTime = item.dateTime.toDate().toString();
+                }
+                docs.push(Object.assign({ id: x.id }, item));
             });
             return docs;
         })

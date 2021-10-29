@@ -1,11 +1,11 @@
 import { Box, Button, Dialog, } from "@material-ui/core";
 import { Form, Formik } from "formik";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import LoadingContext from "../context/loadingContext";
 import NotificationContext from "../context/notificationContext";
 import * as handleSubmission from '../utils/handleSubmission';
 import ItemCard from "./ItemCard";
-import { getContent } from "../utils/firebase-db";
+// import { getContent } from "../utils/firebase-db";
 import TypeContext from "../context/typeContext";
 // import { formFields } from "./FormFields";
 import Featured from "./FormFields/Featured";
@@ -67,7 +67,7 @@ function ItemAddForm(props) {
                             return x === 'featured'
                                 ? (
                                     <div key={x}>
-                                        <Featured featuredValue={props.initialValues.featured} />
+                                        <Featured featuredValue={featured} setFeatured={setFeatured} />
                                     </div>
                                 ) : x === 'dateTime'
                                     ? (<div key={x}>

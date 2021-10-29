@@ -30,9 +30,9 @@ function ItemCard({ item }) {
                     <Typography variant="body2" color="textSecondary" component="p">
                         {item.description || item.groupName}
                     </Typography>
-                    {/* {item.dateTime && <Typography gutterBottom variant="h5" component="h2">
-                        {item.dateTime.toDate().toString()}
-                    </Typography>} */}
+                    {item.dateTime && <Typography gutterBottom variant="h5" component="h2">
+                        {item.dateTime}
+                    </Typography>}
                 </CardContent>
             </CardActionArea>
             <CardActions>

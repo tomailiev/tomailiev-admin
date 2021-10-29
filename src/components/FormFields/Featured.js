@@ -1,9 +1,8 @@
 import { FormControlLabel, Switch } from "@material-ui/core"
-import { useState } from "react";
 
-function Featured({ featuredValue }) {
+function Featured({ featuredValue, setFeatured }) {
 
-    const [featured, setFeatured] = useState(featuredValue);
+    // const [featured, setFeatured] = useState(featuredValue);
 
     const handleSwitchChange = (e) => {
         setFeatured(e.target.checked);
@@ -11,7 +10,7 @@ function Featured({ featuredValue }) {
 
     return (
         <FormControlLabel
-            control={<Switch checked={featured} onChange={handleSwitchChange} name="checkedA" />}
+            control={<Switch checked={featuredValue} onChange={handleSwitchChange} name="checkedA" />}
             label={'featured'}
         />
     )
