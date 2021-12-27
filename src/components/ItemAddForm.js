@@ -18,13 +18,13 @@ function ItemAddForm(props) {
     const { setNotification } = useContext(NotificationContext);
     const { setIsLoading } = useContext(LoadingContext);
     const { type } = useContext(TypeContext);
-    const [featured, setFeatured] = useState(props.initialValues.featured);
+    const [featured, setFeatured] = useState(props.initialValues.featured || props.initialValues.api);
     const [item, setItem] = useState(null);
     const [open, setOpen] = useState(false);
 
     const handleSubmit = (e, { setSubmitting }) => {
         if (props.type === 'group') {
-            props.setGroup(e);
+            props.setGroup(Object.assign(e, { api: featured }));
         }
         if (handleSubmission[type]) {
             setIsLoading(true);
@@ -59,10 +59,10 @@ function ItemAddForm(props) {
                 {(formProps) => (
                     <Form>
                         {Object.keys(props.initialValues).map(x => {
-                            return x === 'featured'
+                            return x === 'featured' || x === 'api'
                                 ? (
                                     <div key={x}>
-                                        <Featured featuredValue={featured} setFeatured={setFeatured} />
+                                        <Featured featuredValue={featured} setFeatured={setFeatured} label={x} />
                                     </div>
                                 ) : x === 'dateTime'
                                     ? (<div key={x}>

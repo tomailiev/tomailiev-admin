@@ -34,6 +34,7 @@ const video = {
 const group = {
     name: '',
     code: '',
+    api: false
 }
 
 export {

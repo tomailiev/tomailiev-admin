@@ -1,22 +1,35 @@
 import { Box, Button, Menu, MenuItem } from "@material-ui/core";
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import LoadingContext from '../context/loadingContext';
 import GroupContext from '../context/groupContext';
 import ItemAddForm from "./ItemAddForm";
+import { getContent, uploadData } from '../utils/firebase-db'
 import * as initialValues from '../utils/initialValues';
 import * as validationSchemas from '../utils/yup-schemas';
+import NotificationContext from "../context/notificationContext";
+
 
 function GroupSelect() {
-    const { isLoading } = useContext(LoadingContext);
-    const { group, setGroup } = useContext(GroupContext);
+    const { setNotification } = useContext(NotificationContext);
+    const { isLoading, setIsLoading } = useContext(LoadingContext);
+    const { setGroup } = useContext(GroupContext);
     const [anchor, setAnchor] = useState(null);
     const [newGroup, setNewGroup] = useState(false);
 
-    const groups = [
-        { name: 'Portland Baroque Orchestra', code: 'pbo', id: '12h3', api: false },
-        { name: 'American Bach Soloists', code: 'abs', id: '4ha83', api: true },
-        { name: 'Philharmonia Baroque Orchestra', code: 'phil', id: '124hja', api: true }
-    ];
+    const [groups, setGroups] = useState([]);
+
+    useEffect(() => {
+        setIsLoading(true);
+        getContent('groups')
+            .then(i => {
+                setGroups(i);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                setNotification(err);
+                setIsLoading(false);
+            })
+    }, [setIsLoading, setNotification]);
 
     function openMenu(e) {
         setAnchor(e.currentTarget);
@@ -27,7 +40,17 @@ function GroupSelect() {
         setAnchor(null);
     }
 
-
+    function addNewGroup(e) {
+        setNewGroup(false);
+        setIsLoading(true);
+        uploadData('group', e)
+            .then(() => {
+                setNotification('Group added');
+                setIsLoading(false);
+                setGroup(e);
+            })
+            .catch(err => setNotification(err))
+    }
 
     return (
         <Box textAlign="center" paddingBottom="10px">
@@ -37,7 +60,7 @@ function GroupSelect() {
             </Menu>
             {/* <div>or</div> */}
             <Button variant="contained" onClick={() => setNewGroup(true)}>Add new group...</Button>
-            {newGroup && !group && <ItemAddForm initialValues={initialValues['group']} validationSchema={validationSchemas['group']} type={'group'} setGroup={setGroup} />}
+            {newGroup && <ItemAddForm initialValues={initialValues['group']} validationSchema={validationSchemas['group']} type={'group'} setGroup={addNewGroup} />}
         </Box>
     );
 }

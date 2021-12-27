@@ -41,6 +41,7 @@ const video = yup.object().shape({
 const group = yup.object().shape({
     name: yup.string().required(),
     code: yup.string().required(),
+    api: yup.boolean().default(false)
 })
 
 export {
