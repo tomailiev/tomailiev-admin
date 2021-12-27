@@ -38,11 +38,17 @@ const video = yup.object().shape({
     featured: yup.boolean().default(false)
 });
 
+const group = yup.object().shape({
+    name: yup.string().required(),
+    code: yup.string().required(),
+})
+
 export {
     userSchema,
     audio,
     event,
     image,
     rec,
-    video
+    video,
+    group
 };

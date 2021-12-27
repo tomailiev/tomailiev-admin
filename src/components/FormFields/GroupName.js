@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import { useContext } from "react";
 import GroupContext from "../../context/groupContext";
 
-function GroupName({ values }) {
+function GroupName({ values, errors, touched }) {
 
     const { group } = useContext(GroupContext);
     return (
@@ -11,8 +11,10 @@ function GroupName({ values }) {
             name={'groupName'}
             type={'groupName'}
             label={'groupName'}
-            value={group?.name || values['groupName']}
-            disabled={!!group}
+            defaultValue={group?.name || values['groupName']}
+            error={touched['groupName'] && !!errors['groupName']}
+            helperText={errors['groupName']}
+            // disabled={!!group}
         />
     )
 }

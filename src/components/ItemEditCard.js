@@ -31,7 +31,7 @@ function ItemEditCard({ item, switchEditing }) {
             .then(() => {
                 setIsLoading(false);
                 switchEditing();
-                setNotification('Upload successful')
+                setNotification('Upload successful');
             })
             .catch(e => {
                 setNotification(e);

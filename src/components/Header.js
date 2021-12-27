@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { AppBar, Button, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, Toolbar } from '@material-ui/core'
 import { useContext } from "react";
 import { NavLink } from 'react-router-dom';
 import NotificationContext from '../context/notificationContext';

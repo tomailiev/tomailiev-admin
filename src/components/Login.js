@@ -11,7 +11,7 @@ import UserContext from "../context/userContext";
 function Login({ history }) {
 
     const { setNotification } = useContext(NotificationContext);
-    const { setIsLoading } = useContext(LoadingContext);
+    const { isLoading, setIsLoading } = useContext(LoadingContext);
     const { setUser } = useContext(UserContext);
 
     function handleSubmit({ email, password }, { setSubmitting, resetForm }) {
@@ -49,6 +49,7 @@ function Login({ history }) {
                                     name="email"
                                     type="email"
                                     label="email"
+                                    disabled={isLoading}
                                     value={values.email}
                                     onChange={handleChange}
                                     error={touched.email && !!errors.email}
@@ -60,12 +61,13 @@ function Login({ history }) {
                                     name="password"
                                     label="password"
                                     type="password"
+                                    disabled={isLoading}
                                     value={values.password}
                                     onChange={handleChange}
                                     error={errors.password && touched.password}
                                     helperText={errors.password} />
                             </div>
-                            <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>Login</Button>
+                            <Button variant="contained" color="primary" type="submit" disabled={isSubmitting || isLoading}>Login</Button>
                         </Form>
                     )}
                 </Formik>

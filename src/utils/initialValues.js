@@ -31,10 +31,16 @@ const video = {
     featured: true
 };
 
+const group = {
+    name: '',
+    code: '',
+}
+
 export {
     audio,
     event,
     image,
     rec,
-    video
+    video,
+    group,
 };

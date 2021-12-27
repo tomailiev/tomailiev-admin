@@ -22,15 +22,10 @@ function ItemAddForm(props) {
     const [item, setItem] = useState(null);
     const [open, setOpen] = useState(false);
 
-    // useEffect(() => {
-    //     if (type === 'events') {
-    //         getContent('groups')
-    //             .then(setGroups)
-    //             .catch(e => setNotification(e.message));
-    //     }
-    // }, [type, setNotification]);
-
     const handleSubmit = (e, { setSubmitting }) => {
+        if (props.type === 'group') {
+            props.setGroup(e);
+        }
         if (handleSubmission[type]) {
             setIsLoading(true);
             handleSubmission[type](e)

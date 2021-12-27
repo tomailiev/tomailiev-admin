@@ -31,7 +31,7 @@ function ItemCard({ item }) {
                         {item.description || item.groupName}
                     </Typography>
                     {item.dateTime && <Typography gutterBottom variant="h5" component="h2">
-                        {item.dateTime}
+                        {item.dateTime.toString()}
                     </Typography>}
                 </CardContent>
             </CardActionArea>
