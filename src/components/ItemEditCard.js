@@ -9,12 +9,14 @@ import Featured from "./FormFields/Featured";
 import DateTime from "./FormFields/DateTime";
 import GroupName from "./FormFields/GroupName";
 import OtherField from "./FormFields/OtherField";
+import GroupContext from "../context/groupContext";
 
 function ItemEditCard({ item, switchEditing }) {
 
     const { type } = useContext(TypeContext);
     const { setNotification } = useContext(NotificationContext);
     const { setIsLoading } = useContext(LoadingContext);
+    const { group } = useContext(GroupContext);
     // const [eventDate, setEventDate] = useState(item.dateTime);
     const [featured, setFeatured] = useState(item.featured);
 
@@ -26,6 +28,9 @@ function ItemEditCard({ item, switchEditing }) {
         // }
         if (type === 'audios' || type === 'videos' || type === 'recs') {
             e.featured = featured;
+        }
+        if (type === 'events' || type === 'event') {
+            e.groupName = group.name;
         }
         uploadData(type, e)
             .then(() => {

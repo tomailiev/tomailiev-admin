@@ -19,7 +19,12 @@ function getContent(type) {
 function uploadData(type, item) {
     const collection = type.endsWith('s') ? type : type + 's';
     const upload = collection === 'events'
-        ? { ...item, dateTime: Timestamp.fromDate(new Date(item.dateTime)) }
+        ? {
+            ...item,
+            dateTime: Timestamp.fromDate(new Date(item.dateTime)),
+            date: new Date(item.dateTime).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+            time: new Date(item.dateTime).toLocaleString('hr', { timeStyle: 'short' })
+        }
         : item
 
     if (item.id) {

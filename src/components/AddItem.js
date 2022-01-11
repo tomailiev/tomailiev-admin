@@ -31,6 +31,9 @@ function AddItem({ location }) {
         setIsLoading(true);
         fetchEvents(group.code)
             .then(ev => {
+                if (ev.message) {
+                    throw ev.message;
+                }
                 setFetchedEvents(ev);
                 setIsLoading(false);
             })
@@ -56,7 +59,7 @@ function AddItem({ location }) {
                     {type === 'event' && group?.api && <Button variant="contained" onClick={searchEvents}>Search events</Button>}
                 </Box>
             </Container>
-            {fetchEvents.length && (
+            {fetchEvents?.length && (
                 <Container maxWidth="lg" style={{ paddingTop: 10 }}>
                     <Grid container justifyContent="space-evenly" alignItems="stretch" direction="row" spacing={2}>
                         {fetchedEvents.map(x => (
